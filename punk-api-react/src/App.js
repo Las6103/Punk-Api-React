@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Beerlist from "./Beerlist.js";
+import Container from "react-bootstrap/Container";
 import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
@@ -36,9 +37,9 @@ class App extends Component {
             </Nav>
           </Navbar>
         </header>
-        <div className="container">
+        <Container>
           <Beerlist data={this.state.data} />
-        </div>
+        </Container>
       </div>
     );
   }
