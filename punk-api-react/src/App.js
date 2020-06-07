@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import Button from "react-bootstrap/Button";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
@@ -23,8 +24,17 @@ class App extends Component {
   render() {
     console.log(this.state.data);
     return (
-      <div className="App">
-        <Button variant="primary">Primary</Button>
+      <div className="main">
+        <header>
+          <Navbar bg="primary" variant="dark">
+            <Navbar.Brand href="#home">Punk Beers</Navbar.Brand>
+            <Nav className="mr-auto">
+              <Nav.Link href="#home">Home</Nav.Link>
+              <Nav.Link href="#features">Create</Nav.Link>
+              <Nav.Link href="#pricing">Pricing</Nav.Link>
+            </Nav>
+          </Navbar>
+        </header>
       </div>
     );
   }
