@@ -53,6 +53,7 @@ function Page(props) {
           Submit
         </Button>
       </Form>
+      <Button variant="danger" type="submit">Delete</Button>
     </div>
   );
 }
