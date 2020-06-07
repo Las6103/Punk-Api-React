@@ -1,6 +1,7 @@
 import React from "react";
 import Beer from "./Beer.js";
 import Row from "react-bootstrap/Row";
+
 function Beerlist(props) {
   // console.log(props.data);
   return (

@@ -10,7 +10,6 @@ function Menu() {
         <Nav className="mr-auto">
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/create">Create</Nav.Link>
-          <Nav.Link href="/update">Update</Nav.Link>
         </Nav>
       </Navbar>
     </header>

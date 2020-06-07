@@ -2,6 +2,8 @@ import React from "react";
 import Menu from "./Navbar.js";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Image from 'react-bootstrap/Image'
+import Container from "react-bootstrap/Container";
 import axios from "axios";
 import { useFormik } from "formik";
 
@@ -23,9 +25,19 @@ function Page(props) {
       });
     },
   });
+
+  const submit = () => {
+    alert("this is going to be deleted");
+    axios({
+      method: "delete",
+      url: `http://localhost:8080/beers/id/${content._id}`,
+    });
+  };
+
   return (
     <div>
       <Menu />
+      <Container>
       <Form onSubmit={formik.handleSubmit}>
         <Form.Group controlId="formGroupName">
           <Form.Label>Beer Name</Form.Label>
@@ -53,7 +65,10 @@ function Page(props) {
           Submit
         </Button>
       </Form>
-      <Button variant="danger" type="submit">Delete</Button>
+      <Button variant="danger" type="submit" onClick={submit}>
+        Delete
+      </Button>
+      </Container>
     </div>
   );
 }
