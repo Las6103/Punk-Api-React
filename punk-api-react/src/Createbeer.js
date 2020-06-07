@@ -2,6 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Menu from "./Navbar.js";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
 import { useFormik } from "formik";
 
 function Createbeer() {
@@ -12,6 +13,11 @@ function Createbeer() {
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
+      axios({
+        method: "post",
+        url: "http://localhost:8080/beers",
+        data: values,
+      });
     },
   });
   return (
@@ -23,7 +29,7 @@ function Createbeer() {
           <Form.Control
             type="text"
             placeholder="Enter beer name"
-            id="name"
+            controlid="name"
             name="name"
             onChange={formik.handleChange}
             value={formik.values.name}
@@ -34,7 +40,7 @@ function Createbeer() {
           <Form.Control
             type="text"
             placeholder="Insert Image URL"
-            id="image_url"
+            controlid="image_url"
             name="image_url"
             onChange={formik.handleChange}
             value={formik.values.image_url}
