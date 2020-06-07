@@ -1,4 +1,5 @@
 import React from 'react'
+import Menu from "./Navbar.js";
 import { Route, Link } from "react-router-dom";
 
 function Page(props) {
@@ -7,7 +8,7 @@ function Page(props) {
     console.log(content);
     return (
         <div>
-            
+            <Menu />
         </div>
     )
 }
