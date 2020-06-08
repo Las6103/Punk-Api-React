@@ -10,14 +10,20 @@ import axios from "axios";
 import { useFormik } from "formik";
 
 function Page(props) {
-  const content =
-    props.data.find((data) => data._id === props.match.params.id) || {};
-  console.log(content);
+  const content = props.data.find(
+    (data) => data._id === props.match.params.id
+  ) || { food_pairing: [] };
+  
   const formik = useFormik({
     initialValues: {
       name: content.name,
       image_url: content.image_url,
+      tagline: content.tagline,
+      description: content.description,
     },
+
+    enableReinitialize: true,
+
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
       axios({
@@ -48,6 +54,8 @@ function Page(props) {
           <p>This beer was first brewed in {content.first_brewed}</p>
           <h3>Here are some great food pairings!</h3>
           <Foodpairing data={content.food_pairing} />
+          <h2>Brewing Tips</h2>
+          <p>{content.brewers_tips}</p>
         </Jumbotron>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group controlId="formGroupName">
@@ -70,6 +78,28 @@ function Page(props) {
               name="image_url"
               onChange={formik.handleChange}
               value={formik.values.image_url}
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupTagline">
+            <Form.Label>Tagline</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Insert Tagline"
+              controlid="tagline"
+              name="tagline"
+              onChange={formik.handleChange}
+              value={formik.values.tagline}
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupDescription">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Insert Description"
+              controlid="description"
+              name="description"
+              onChange={formik.handleChange}
+              value={formik.values.description}
             />
           </Form.Group>
           <Button variant="primary" type="submit">
