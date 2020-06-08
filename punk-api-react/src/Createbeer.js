@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Menu from "./Navbar.js";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { useFormik } from "formik";
 
@@ -19,7 +20,7 @@ function Createbeer() {
       contributed_by: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      JSON.stringify(values, null, 2);
       axios({
         method: "post",
         url: "http://localhost:8080/beers",
@@ -30,12 +31,23 @@ function Createbeer() {
       });
     },
   });
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const handleCreate = () => {
+    formik.handleSubmit();
+    setShow(false);
+  };
+  const handleShow = () => setShow(true);
   return (
     <div>
       <Menu />
       <Container>
         <h2>Create Your Own Beer!</h2>
-        <Form onSubmit={formik.handleSubmit}>
+        <Form>
           <Form.Group controlId="formGroupName">
             <Form.Label>Beer Name</Form.Label>
             <Form.Control
@@ -126,10 +138,25 @@ function Createbeer() {
               value={formik.values.contributed_by}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+ 
         </Form>
+        <Button variant="primary" type="submit" onClick={handleShow}>
+            Create
+          </Button>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Please confirm</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>You're about to create this delicious beer!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleCreate}>
+              Create
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     </div>
   );

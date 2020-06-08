@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 
@@ -36,7 +37,7 @@ function Page(props) {
   });
 
   const submit = () => {
-    axios({
+    return axios({
       method: "delete",
       url: `http://localhost:8080/beers/id/${content._id}`,
     });
@@ -48,6 +49,7 @@ function Page(props) {
   const handleUpdate = () => {
     formik.handleSubmit();
     setShowUpdate(false);
+    window.location.reload(true);
   };
 
   const [show, setShow] = useState(false);
@@ -56,9 +58,14 @@ function Page(props) {
   };
 
   const handleDelete = () => {
-    submit();
-    setShow(false);
+    submit().then(() => {
+      setShow(false);
+    //   window.location.href = "http://localhost:3000";
+    props.history.push('/')
+    });
+    
   };
+
   const handleShow = () => setShow(true);
 
   return (
