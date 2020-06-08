@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Foodpairing from "./Foodpairing.js";
 import Menu from "./Navbar.js";
+import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Image from "react-bootstrap/Image";
@@ -13,7 +14,7 @@ function Page(props) {
   const content = props.data.find(
     (data) => data._id === props.match.params.id
   ) || { food_pairing: [] };
-  
+
   const formik = useFormik({
     initialValues: {
       name: content.name,
@@ -25,7 +26,7 @@ function Page(props) {
     enableReinitialize: true,
 
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      JSON.stringify(values, null, 2);
       axios({
         method: "put",
         url: `http://localhost:8080/beers/id/${content._id}`,
@@ -35,12 +36,30 @@ function Page(props) {
   });
 
   const submit = () => {
-    alert("this is going to be deleted");
     axios({
       method: "delete",
       url: `http://localhost:8080/beers/id/${content._id}`,
     });
   };
+  const [showUpdate, setShowUpdate] = useState(false);
+
+  const handleCloseUpdate = () => setShowUpdate(false);
+  const handleShowUpdate = () => setShowUpdate(true);
+  const handleUpdate = () => {
+    formik.handleSubmit();
+    setShowUpdate(false);
+  };
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const handleDelete = () => {
+    submit();
+    setShow(false);
+  };
+  const handleShow = () => setShow(true);
 
   return (
     <div>
@@ -57,7 +76,7 @@ function Page(props) {
           <h2>Brewing Tips</h2>
           <p>{content.brewers_tips}</p>
         </Jumbotron>
-        <Form onSubmit={formik.handleSubmit}>
+        <Form>
           <Form.Group controlId="formGroupName">
             <Form.Label>Beer Name</Form.Label>
             <Form.Control
@@ -102,13 +121,45 @@ function Page(props) {
               value={formik.values.description}
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Update
-          </Button>
         </Form>
-        <Button variant="danger" type="submit" onClick={submit}>
+
+        <Button variant="primary" type="submit" onClick={handleShowUpdate}>
+          Update
+        </Button>
+        <Button variant="danger" type="submit" onClick={handleShow}>
           Delete
         </Button>
+
+        <Modal show={showUpdate} onHide={handleCloseUpdate}>
+          <Modal.Header closeButton>
+            <Modal.Title>Please confirm</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>You're about to update this delicious beer!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseUpdate}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleUpdate}>
+              Update
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        {/* Delete Modal */}
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Please confirm</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>You're about to delete this delicious beer!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="danger" onClick={handleDelete}>
+              DELETE
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Container>
     </div>
   );
