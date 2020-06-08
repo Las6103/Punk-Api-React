@@ -103,7 +103,7 @@ function Page(props) {
             />
           </Form.Group>
           <Button variant="primary" type="submit">
-            Submit
+            Update
           </Button>
         </Form>
         <Button variant="danger" type="submit" onClick={submit}>

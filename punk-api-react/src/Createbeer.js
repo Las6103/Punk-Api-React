@@ -13,7 +13,10 @@ function Createbeer() {
       image_url: "",
       tagline: "",
       description: "",
+      first_brewed: "",
       food_pairing: "",
+      brewers_tips: "",
+      contributed_by: "",
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -31,6 +34,7 @@ function Createbeer() {
     <div>
       <Menu />
       <Container>
+        <h2>Create Your Own Beer!</h2>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group controlId="formGroupName">
             <Form.Label>Beer Name</Form.Label>
@@ -76,8 +80,21 @@ function Createbeer() {
               value={formik.values.description}
             />
           </Form.Group>
+          <Form.Group controlId="formGroupBrewDate">
+            <Form.Label>Brew Date</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Insert Brew Date"
+              controlid="first_brewed"
+              name="first_brewed"
+              onChange={formik.handleChange}
+              value={formik.values.first_brewed}
+            />
+          </Form.Group>
           <Form.Group controlId="formGroupFoodPairing">
-            <Form.Label>Food Pairing</Form.Label>
+            <Form.Label>
+              Food Pairings <em>* Use a comma to separate food pairings</em>
+            </Form.Label>
             <Form.Control
               type="text"
               placeholder="Insert Food Pairing"
@@ -85,6 +102,28 @@ function Createbeer() {
               name="food_pairing"
               onChange={formik.handleChange}
               value={formik.values.food_pairing}
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupBrewingTips">
+            <Form.Label>Brewing Tips</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Insert Brewing Tips"
+              controlid="brewers_tips"
+              name="brewers_tips"
+              onChange={formik.handleChange}
+              value={formik.values.brewers_tips}
+            />
+          </Form.Group>
+          <Form.Group controlId="formGroupCreator">
+            <Form.Label>Creator</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Insert Creator"
+              controlid="contributed_by"
+              name="contributed_by"
+              onChange={formik.handleChange}
+              value={formik.values.contributed_by}
             />
           </Form.Group>
           <Button variant="primary" type="submit">
