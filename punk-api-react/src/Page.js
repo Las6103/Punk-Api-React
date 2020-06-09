@@ -17,6 +17,10 @@ class Page extends Component {
     this.state = {
       beer: {
         food_pairing: [],
+        name: "",
+        image_url: "",
+        tagline: "",
+        description: "",
       },
       show: false,
       showUpdate: false,
@@ -24,16 +28,19 @@ class Page extends Component {
   }
 
   componentDidMount() {
+    this.getBeer();
+  }
+
+  getBeer = () => {
     fetch(`http://localhost:8080/beers/id/${this.props.match.params.id}`)
       .then((unparsedData) => unparsedData.json())
       .then((parsedData) => {
         this.setState({ beer: parsedData });
-        console.log(this.state.beer);
       });
-  }
+  };
 
   update = (values) => {
-    axios({
+    return axios({
       method: "put",
       url: `http://localhost:8080/beers/id/${this.state.beer._id}`,
       data: values,
@@ -85,7 +92,7 @@ class Page extends Component {
     // };
 
     const content = this.state.beer;
-
+    console.log(content);
     return (
       <div>
         <Menu />
@@ -102,16 +109,13 @@ class Page extends Component {
             <p>{content.brewers_tips}</p>
           </Jumbotron>
           <Formik
-            initialValues={{
-              name: content.name,
-              image_url: content.image_url,
-              tagline: content.tagline,
-              description: content.description,
-            }}
+            initialValues={this.state.beer}
             enableReinitialize={true}
-            onSubmit={(values) => this.update(values)}
+            onSubmit={(values) =>
+              this.update(values).then(() => this.getBeer())
+            }
           >
-            {() => (
+            {(props) => (
               <Form>
                 <Form.Group controlId="formGroupName">
                   <Form.Label>Beer Name</Form.Label>
@@ -120,6 +124,8 @@ class Page extends Component {
                     placeholder="Enter beer name"
                     controlid="name"
                     name="name"
+                    onChange={props.handleChange}
+                    value={props.values.name}
                   />
                 </Form.Group>
                 <Form.Group controlId="formGroupImage">
@@ -129,6 +135,8 @@ class Page extends Component {
                     placeholder="Insert Image URL"
                     controlid="image_url"
                     name="image_url"
+                    onChange={props.handleChange}
+                    value={props.values.image_url}
                   />
                 </Form.Group>
                 <Form.Group controlId="formGroupTagline">
@@ -138,6 +146,8 @@ class Page extends Component {
                     placeholder="Insert Tagline"
                     controlid="tagline"
                     name="tagline"
+                    onChange={props.handleChange}
+                    value={props.values.tagline}
                   />
                 </Form.Group>
                 <Form.Group controlId="formGroupDescription">
@@ -147,36 +157,53 @@ class Page extends Component {
                     placeholder="Insert Description"
                     controlid="description"
                     name="description"
+                    onChange={props.handleChange}
+                    value={props.values.description}
                   />
                 </Form.Group>
+                <Button
+                  variant="primary"
+                  type="button"
+                  onClick={this.handleShowUpdate}
+                >
+                  Update
+                </Button>
+                <Modal
+                  show={this.state.showUpdate}
+                  onHide={this.handleCloseUpdate}
+                >
+                  <Modal.Header closeButton>
+                    <Modal.Title>Please confirm</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    You're about to update this delicious beer!
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button
+                      variant="secondary"
+                      onClick={this.handleCloseUpdate}
+                    >
+                      Close
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        this.handleCloseUpdate();
+                        props.handleSubmit();
+                        this.getBeer();
+                      }}
+                    >
+                      Update
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </Form>
             )}
           </Formik>
-          <Button
-            variant="primary"
-            type="submit"
-            onClick={this.handleShowUpdate}
-          >
-            Update
-          </Button>
+
           <Button variant="danger" type="submit" onClick={this.handleShow}>
             Delete
           </Button>
-
-          <Modal show={this.state.showUpdate} onHide={this.handleCloseUpdate}>
-            <Modal.Header closeButton>
-              <Modal.Title>Please confirm</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>You're about to update this delicious beer!</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={this.handleCloseUpdate}>
-                Close
-              </Button>
-              <Button variant="primary" onClick={this.handleUpdate}>
-                Update
-              </Button>
-            </Modal.Footer>
-          </Modal>
 
           {/* Delete Modal */}
           <Modal show={this.state.show} onHide={this.handleClose}>
