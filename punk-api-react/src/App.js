@@ -11,18 +11,18 @@ class App extends Component {
   constructor() {
     super();
 
-    this.state = {
-      data: [],
-    };
+    // this.state = {
+    //   data: [],
+    // };
   }
-  componentDidMount() {
-    let url = "http://localhost:8080/beers";
-    fetch(url)
-      .then((unparsedData) => unparsedData.json())
-      .then((parsedData) => {
-        this.setState({ data: parsedData });
-      });
-  }
+  // componentDidMount() {
+    // fetch("http://localhost:8080/beers")
+    // .then((unparsedData) => unparsedData.json())
+    // .then((parsedData) => {
+    //   this.setState({ data: parsedData });
+    // });
+  // }
+
 
   render() {
     // console.log(this.state.data);
@@ -31,14 +31,16 @@ class App extends Component {
         <Route path="/create" render={() => <Createbeer />} />
         <Route
           path="/beers/:id"
-          render={(props) => <Page {...props} data={this.state.data} />}
+          render={(props) => (
+            <Page {...props}  />
+          )}
         />
 
         <Route path="/">
           <div className="main">
             <Menu />
             <Container>
-              <Beerlist data={this.state.data} />
+              <Beerlist />
             </Container>
           </div>
         </Route>

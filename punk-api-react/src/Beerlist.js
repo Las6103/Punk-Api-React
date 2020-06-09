@@ -1,16 +1,34 @@
-import React from "react";
+import React, { Component } from "react";
 import Beer from "./Beer.js";
 import Row from "react-bootstrap/Row";
 
-function Beerlist(props) {
-  // console.log(props.data);
-  return (
-    <Row>
-      {props.data.map((data) => {
-        return <Beer data={data} key={data.name} />;
-      })}
-    </Row>
-  );
+class Beerlist extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: [],
+    };
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:8080/beers")
+      .then((unparsedData) => unparsedData.json())
+      .then((parsedData) => {
+        this.setState({ data: parsedData });
+      });
+    console.log("works");
+  }
+
+  render() {
+    return (
+      <Row>
+        {this.state.data.map((data) => {
+          return <Beer data={data} key={data.name} />;
+        })}
+      </Row>
+    );
+  }
 }
 
 export default Beerlist;
