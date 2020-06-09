@@ -176,7 +176,7 @@ class Page extends Component {
                     </Form.Group>
                     <Button
                       variant="danger"
-                      type="submit"
+                      type="button"
                       onClick={this.handleShow}
                     >
                       Delete
