@@ -174,6 +174,13 @@ class Page extends Component {
                         value={props.values.description}
                       />
                     </Form.Group>
+                    <Button
+                      variant="danger"
+                      type="button"
+                      onClick={this.handleShow}
+                    >
+                      Delete
+                    </Button>
                   </Col>
                 </Row>
 
@@ -209,9 +216,7 @@ class Page extends Component {
               </Form>
             )}
           </Formik>
-          <Button variant="danger" type="button" onClick={this.handleShow}>
-            Delete
-          </Button>
+
           <Modal show={this.state.show} onHide={this.handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Please confirm</Modal.Title>
