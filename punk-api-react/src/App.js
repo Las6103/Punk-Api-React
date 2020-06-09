@@ -10,22 +10,9 @@ import { Route, Switch } from "react-router-dom";
 class App extends Component {
   constructor() {
     super();
-
-    // this.state = {
-    //   data: [],
-    // };
   }
-  // componentDidMount() {
-    // fetch("http://localhost:8080/beers")
-    // .then((unparsedData) => unparsedData.json())
-    // .then((parsedData) => {
-    //   this.setState({ data: parsedData });
-    // });
-  // }
-
-
+  
   render() {
-    // console.log(this.state.data);
     return (
       <Switch>
         <Route path="/create" render={() => <Createbeer />} />

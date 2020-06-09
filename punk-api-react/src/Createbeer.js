@@ -23,7 +23,7 @@ function Createbeer() {
       JSON.stringify(values, null, 2);
       axios({
         method: "post",
-        url: "http://localhost:8080/beers",
+        url: "https://punk-api-beers.herokuapp.com/beers",
         data: {
           ...values,
           food_pairing: values.food_pairing.split(","),

@@ -12,7 +12,7 @@ class Beerlist extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:8080/beers")
+    fetch("https://punk-api-beers.herokuapp.com/beers")
       .then((unparsedData) => unparsedData.json())
       .then((parsedData) => {
         this.setState({ data: parsedData });

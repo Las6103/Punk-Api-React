@@ -4,7 +4,7 @@ import Menu from "./Navbar.js";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
+import "./page.css";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import axios from "axios";
@@ -32,7 +32,7 @@ class Page extends Component {
   }
 
   getBeer = () => {
-    fetch(`http://localhost:8080/beers/id/${this.props.match.params.id}`)
+    fetch(`https://punk-api-beers.herokuapp.com/beers/id/${this.props.match.params.id}`)
       .then((unparsedData) => unparsedData.json())
       .then((parsedData) => {
         this.setState({ beer: parsedData });
@@ -42,7 +42,7 @@ class Page extends Component {
   update = (values) => {
     return axios({
       method: "put",
-      url: `http://localhost:8080/beers/id/${this.state.beer._id}`,
+      url: `https://punk-api-beers.herokuapp.com/beers/id/${this.state.beer._id}`,
       data: values,
     });
   };
@@ -50,7 +50,7 @@ class Page extends Component {
   delete = () => {
     return axios({
       method: "delete",
-      url: `http://localhost:8080/beers/id/${this.state.beer._id}`,
+      url: `https://punk-api-beers.herokuapp.com/beers/id/${this.state.beer._id}`,
     });
   };
 
@@ -59,11 +59,6 @@ class Page extends Component {
   };
 
   handleCloseUpdate = () => {
-    this.setState({ showUpdate: false });
-  };
-
-  handleUpdate = () => {
-    //   formik.handlesubmit bs
     this.setState({ showUpdate: false });
   };
 
@@ -83,22 +78,17 @@ class Page extends Component {
   };
 
   render() {
-    // const handleUpdate = () => {
-    //   // TODO: you were going to figure out how to call formik methods, such as submit
-    //   // apart from useing "useFormik({})"
-    //   //   formik.handleSubmit();
-    //   setShowUpdate(false);
-    //   window.location.reload(true);
-    // };
-
     const content = this.state.beer;
-    console.log(content);
     return (
       <div>
         <Menu />
         <Container>
           <Jumbotron fluid>
-            <Image src={content.image_url} alt={content.name} />
+            <Container>
+            <div
+              className="images"
+              style={{ backgroundImage: `url(${content.image_url})` }}
+            ></div>
             <h2>{content.name}</h2>
             <h3>{content.tagline}</h3>
             <p>{content.description}</p>
@@ -107,6 +97,7 @@ class Page extends Component {
             <Foodpairing data={content.food_pairing} />
             <h2>Brewing Tips</h2>
             <p>{content.brewers_tips}</p>
+            </Container>
           </Jumbotron>
           <Formik
             initialValues={this.state.beer}
