@@ -1,6 +1,14 @@
 .img {
+    margin-top: 1rem;
     padding-bottom: 100%;
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.card {
+    margin: 1rem 0;
+    border: 3px solid #007bff;
+    color: black;
+}
+

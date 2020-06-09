@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Menu from "./Navbar.js";
 import Beerlist from "./Beerlist.js";
+import Footer from "./footer.js"
 import Container from "react-bootstrap/Container";
 import Page from "./Page.js";
 import Createbeer from "./Createbeer.js";
@@ -28,6 +29,7 @@ class App extends Component {
             <Menu />
             <Container>
               <Beerlist />
+              <Footer />
             </Container>
           </div>
         </Route>

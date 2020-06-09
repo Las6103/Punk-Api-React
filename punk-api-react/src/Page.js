@@ -1,8 +1,11 @@
 import React, { useState, Component } from "react";
 import Foodpairing from "./Foodpairing.js";
 import Menu from "./Navbar.js";
+import Footer from "./footer.js"
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import "./page.css";
 import Container from "react-bootstrap/Container";
@@ -32,7 +35,9 @@ class Page extends Component {
   }
 
   getBeer = () => {
-    fetch(`https://punk-api-beers.herokuapp.com/beers/id/${this.props.match.params.id}`)
+    fetch(
+      `https://punk-api-beers.herokuapp.com/beers/id/${this.props.match.params.id}`
+    )
       .then((unparsedData) => unparsedData.json())
       .then((parsedData) => {
         this.setState({ beer: parsedData });
@@ -85,18 +90,18 @@ class Page extends Component {
         <Container>
           <Jumbotron fluid>
             <Container>
-            <div
-              className="images"
-              style={{ backgroundImage: `url(${content.image_url})` }}
-            ></div>
-            <h2>{content.name}</h2>
-            <h3>{content.tagline}</h3>
-            <p>{content.description}</p>
-            <p>This beer was first brewed in {content.first_brewed}</p>
-            <h3>Here are some great food pairings!</h3>
-            <Foodpairing data={content.food_pairing} />
-            <h2>Brewing Tips</h2>
-            <p>{content.brewers_tips}</p>
+              <div
+                className="images"
+                style={{ backgroundImage: `url(${content.image_url})` }}
+              ></div>
+              <h2>{content.name}</h2>
+              <h3>{content.tagline}</h3>
+              <p>{content.description}</p>
+              <h4>This beer was first brewed in {content.first_brewed}!</h4>
+              <h3>Here are some great food pairings!</h3>
+              <Foodpairing data={content.food_pairing} />
+              <h2>Brewing Tips</h2>
+              <p>{content.brewers_tips}</p>
             </Container>
           </Jumbotron>
           <Formik
@@ -108,57 +113,71 @@ class Page extends Component {
           >
             {(props) => (
               <Form>
-                <Form.Group controlId="formGroupName">
-                  <Form.Label>Beer Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter beer name"
-                    controlid="name"
-                    name="name"
-                    onChange={props.handleChange}
-                    value={props.values.name}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGroupImage">
-                  <Form.Label>Beer Image</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Insert Image URL"
-                    controlid="image_url"
-                    name="image_url"
-                    onChange={props.handleChange}
-                    value={props.values.image_url}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGroupTagline">
-                  <Form.Label>Tagline</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Insert Tagline"
-                    controlid="tagline"
-                    name="tagline"
-                    onChange={props.handleChange}
-                    value={props.values.tagline}
-                  />
-                </Form.Group>
-                <Form.Group controlId="formGroupDescription">
-                  <Form.Label>Description</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Insert Description"
-                    controlid="description"
-                    name="description"
-                    onChange={props.handleChange}
-                    value={props.values.description}
-                  />
-                </Form.Group>
-                <Button
-                  variant="primary"
-                  type="button"
-                  onClick={this.handleShowUpdate}
-                >
-                  Update
-                </Button>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group controlId="formGroupName">
+                      <Form.Label>Beer Name</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter beer name"
+                        controlid="name"
+                        name="name"
+                        onChange={props.handleChange}
+                        value={props.values.name}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="formGroupImage">
+                      <Form.Label>Beer Image</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Insert Image URL"
+                        controlid="image_url"
+                        name="image_url"
+                        onChange={props.handleChange}
+                        value={props.values.image_url}
+                      />
+                    </Form.Group>
+                    <Button
+                      variant="primary"
+                      type="button"
+                      onClick={this.handleShowUpdate}
+                    >
+                      Update
+                    </Button>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group controlId="formGroupTagline">
+                      <Form.Label>Tagline</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Insert Tagline"
+                        controlid="tagline"
+                        name="tagline"
+                        onChange={props.handleChange}
+                        value={props.values.tagline}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="formGroupDescription">
+                      <Form.Label>Description</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Insert Description"
+                        controlid="description"
+                        name="description"
+                        onChange={props.handleChange}
+                        value={props.values.description}
+                      />
+                    </Form.Group>
+                    <Button
+                      variant="danger"
+                      type="submit"
+                      onClick={this.handleShow}
+                    >
+                      Delete
+                    </Button>
+                  </Col>
+                </Row>
+
                 <Modal
                   show={this.state.showUpdate}
                   onHide={this.handleCloseUpdate}
@@ -192,10 +211,6 @@ class Page extends Component {
             )}
           </Formik>
 
-          <Button variant="danger" type="submit" onClick={this.handleShow}>
-            Delete
-          </Button>
-
           {/* Delete Modal */}
           <Modal show={this.state.show} onHide={this.handleClose}>
             <Modal.Header closeButton>
@@ -211,6 +226,7 @@ class Page extends Component {
               </Button>
             </Modal.Footer>
           </Modal>
+          <Footer />
         </Container>
       </div>
     );
