@@ -9,9 +9,6 @@ import Createbeer from "./Createbeer.js";
 import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
-  constructor() {
-    super();
-  }
   
   render() {
     return (

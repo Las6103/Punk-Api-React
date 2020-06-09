@@ -1,7 +1,7 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 import Foodpairing from "./Foodpairing.js";
 import Menu from "./Navbar.js";
-import Footer from "./footer.js"
+import Footer from "./footer.js";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -44,6 +44,9 @@ class Page extends Component {
       });
   };
 
+  /**
+   * HTTP Methods
+   */
   update = (values) => {
     return axios({
       method: "put",
@@ -59,6 +62,9 @@ class Page extends Component {
     });
   };
 
+  /**
+   * Modal Controls
+   */
   handleShowUpdate = () => {
     this.setState({ showUpdate: true });
   };
@@ -211,7 +217,6 @@ class Page extends Component {
             )}
           </Formik>
 
-          {/* Delete Modal */}
           <Modal show={this.state.show} onHide={this.handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>Please confirm</Modal.Title>
